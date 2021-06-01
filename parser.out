@@ -1,0 +1,433 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> Entry
+Rule 1     Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+Rule 2     RUAS -> INT : WORD ( PAR LIXO : WORD - WORD )
+Rule 3     RUAS -> INT : WORD ( IMPAR LIXO : WORD - WORD )
+Rule 4     RUAS -> INT : WORD ( AMBOS LIXO : WORD - WORD )
+Rule 5     RUAS -> INT : WORD , WORD
+Rule 6     RUAS -> INT : WORD , INT
+Rule 7     RUAS -> INT : WORD , SEQ
+Rule 8     RUAS -> INT : WORD , INT WORD
+
+Terminals, with rules where they appear
+
+(                    : 2 3 4
+)                    : 2 3 4
+,                    : 1 1 1 1 1 1 1 1 1 5 6 7 8
+-                    : 2 3 4
+:                    : 2 2 3 3 4 4 5 6 7 8
+AMBOS                : 4
+FLOAT                : 1 1
+IMPAR                : 3
+INT                  : 1 1 1 1 2 3 4 5 6 6 7 8 8
+LIXO                 : 2 3 4
+PAR                  : 2
+SEQ                  : 7
+WORD                 : 1 1 1 2 2 2 3 3 3 4 4 4 5 5 6 7 8 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+Entry                : 0
+RUAS                 : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Entry
+    (1) Entry -> . FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    FLOAT           shift and go to state 2
+
+    Entry                          shift and go to state 1
+
+state 1
+
+    (0) S' -> Entry .
+
+
+
+state 2
+
+    (1) Entry -> FLOAT . , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    ,               shift and go to state 3
+
+
+state 3
+
+    (1) Entry -> FLOAT , . FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    FLOAT           shift and go to state 4
+
+
+state 4
+
+    (1) Entry -> FLOAT , FLOAT . , INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    ,               shift and go to state 5
+
+
+state 5
+
+    (1) Entry -> FLOAT , FLOAT , . INT , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    INT             shift and go to state 6
+
+
+state 6
+
+    (1) Entry -> FLOAT , FLOAT , INT . , WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    ,               shift and go to state 7
+
+
+state 7
+
+    (1) Entry -> FLOAT , FLOAT , INT , . WORD , RUAS , WORD , WORD , INT , INT , INT
+
+    WORD            shift and go to state 8
+
+
+state 8
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD . , RUAS , WORD , WORD , INT , INT , INT
+
+    ,               shift and go to state 9
+
+
+state 9
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , . RUAS , WORD , WORD , INT , INT , INT
+    (2) RUAS -> . INT : WORD ( PAR LIXO : WORD - WORD )
+    (3) RUAS -> . INT : WORD ( IMPAR LIXO : WORD - WORD )
+    (4) RUAS -> . INT : WORD ( AMBOS LIXO : WORD - WORD )
+    (5) RUAS -> . INT : WORD , WORD
+    (6) RUAS -> . INT : WORD , INT
+    (7) RUAS -> . INT : WORD , SEQ
+    (8) RUAS -> . INT : WORD , INT WORD
+
+    INT             shift and go to state 10
+
+    RUAS                           shift and go to state 11
+
+state 10
+
+    (2) RUAS -> INT . : WORD ( PAR LIXO : WORD - WORD )
+    (3) RUAS -> INT . : WORD ( IMPAR LIXO : WORD - WORD )
+    (4) RUAS -> INT . : WORD ( AMBOS LIXO : WORD - WORD )
+    (5) RUAS -> INT . : WORD , WORD
+    (6) RUAS -> INT . : WORD , INT
+    (7) RUAS -> INT . : WORD , SEQ
+    (8) RUAS -> INT . : WORD , INT WORD
+
+    :               shift and go to state 12
+
+
+state 11
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS . , WORD , WORD , INT , INT , INT
+
+    ,               shift and go to state 13
+
+
+state 12
+
+    (2) RUAS -> INT : . WORD ( PAR LIXO : WORD - WORD )
+    (3) RUAS -> INT : . WORD ( IMPAR LIXO : WORD - WORD )
+    (4) RUAS -> INT : . WORD ( AMBOS LIXO : WORD - WORD )
+    (5) RUAS -> INT : . WORD , WORD
+    (6) RUAS -> INT : . WORD , INT
+    (7) RUAS -> INT : . WORD , SEQ
+    (8) RUAS -> INT : . WORD , INT WORD
+
+    WORD            shift and go to state 14
+
+
+state 13
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , . WORD , WORD , INT , INT , INT
+
+    WORD            shift and go to state 15
+
+
+state 14
+
+    (2) RUAS -> INT : WORD . ( PAR LIXO : WORD - WORD )
+    (3) RUAS -> INT : WORD . ( IMPAR LIXO : WORD - WORD )
+    (4) RUAS -> INT : WORD . ( AMBOS LIXO : WORD - WORD )
+    (5) RUAS -> INT : WORD . , WORD
+    (6) RUAS -> INT : WORD . , INT
+    (7) RUAS -> INT : WORD . , SEQ
+    (8) RUAS -> INT : WORD . , INT WORD
+
+    (               shift and go to state 16
+    ,               shift and go to state 17
+
+
+state 15
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD . , WORD , INT , INT , INT
+
+    ,               shift and go to state 18
+
+
+state 16
+
+    (2) RUAS -> INT : WORD ( . PAR LIXO : WORD - WORD )
+    (3) RUAS -> INT : WORD ( . IMPAR LIXO : WORD - WORD )
+    (4) RUAS -> INT : WORD ( . AMBOS LIXO : WORD - WORD )
+
+    PAR             shift and go to state 19
+    IMPAR           shift and go to state 20
+    AMBOS           shift and go to state 21
+
+
+state 17
+
+    (5) RUAS -> INT : WORD , . WORD
+    (6) RUAS -> INT : WORD , . INT
+    (7) RUAS -> INT : WORD , . SEQ
+    (8) RUAS -> INT : WORD , . INT WORD
+
+    WORD            shift and go to state 23
+    INT             shift and go to state 22
+    SEQ             shift and go to state 24
+
+
+state 18
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , . WORD , INT , INT , INT
+
+    WORD            shift and go to state 25
+
+
+state 19
+
+    (2) RUAS -> INT : WORD ( PAR . LIXO : WORD - WORD )
+
+    LIXO            shift and go to state 26
+
+
+state 20
+
+    (3) RUAS -> INT : WORD ( IMPAR . LIXO : WORD - WORD )
+
+    LIXO            shift and go to state 27
+
+
+state 21
+
+    (4) RUAS -> INT : WORD ( AMBOS . LIXO : WORD - WORD )
+
+    LIXO            shift and go to state 28
+
+
+state 22
+
+    (6) RUAS -> INT : WORD , INT .
+    (8) RUAS -> INT : WORD , INT . WORD
+
+    ,               reduce using rule 6 (RUAS -> INT : WORD , INT .)
+    WORD            shift and go to state 29
+
+
+state 23
+
+    (5) RUAS -> INT : WORD , WORD .
+
+    ,               reduce using rule 5 (RUAS -> INT : WORD , WORD .)
+
+
+state 24
+
+    (7) RUAS -> INT : WORD , SEQ .
+
+    ,               reduce using rule 7 (RUAS -> INT : WORD , SEQ .)
+
+
+state 25
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD . , INT , INT , INT
+
+    ,               shift and go to state 30
+
+
+state 26
+
+    (2) RUAS -> INT : WORD ( PAR LIXO . : WORD - WORD )
+
+    :               shift and go to state 31
+
+
+state 27
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO . : WORD - WORD )
+
+    :               shift and go to state 32
+
+
+state 28
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO . : WORD - WORD )
+
+    :               shift and go to state 33
+
+
+state 29
+
+    (8) RUAS -> INT : WORD , INT WORD .
+
+    ,               reduce using rule 8 (RUAS -> INT : WORD , INT WORD .)
+
+
+state 30
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , . INT , INT , INT
+
+    INT             shift and go to state 34
+
+
+state 31
+
+    (2) RUAS -> INT : WORD ( PAR LIXO : . WORD - WORD )
+
+    WORD            shift and go to state 35
+
+
+state 32
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO : . WORD - WORD )
+
+    WORD            shift and go to state 36
+
+
+state 33
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO : . WORD - WORD )
+
+    WORD            shift and go to state 37
+
+
+state 34
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT . , INT , INT
+
+    ,               shift and go to state 38
+
+
+state 35
+
+    (2) RUAS -> INT : WORD ( PAR LIXO : WORD . - WORD )
+
+    -               shift and go to state 39
+
+
+state 36
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO : WORD . - WORD )
+
+    -               shift and go to state 40
+
+
+state 37
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO : WORD . - WORD )
+
+    -               shift and go to state 41
+
+
+state 38
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , . INT , INT
+
+    INT             shift and go to state 42
+
+
+state 39
+
+    (2) RUAS -> INT : WORD ( PAR LIXO : WORD - . WORD )
+
+    WORD            shift and go to state 43
+
+
+state 40
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO : WORD - . WORD )
+
+    WORD            shift and go to state 44
+
+
+state 41
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO : WORD - . WORD )
+
+    WORD            shift and go to state 45
+
+
+state 42
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT . , INT
+
+    ,               shift and go to state 46
+
+
+state 43
+
+    (2) RUAS -> INT : WORD ( PAR LIXO : WORD - WORD . )
+
+    )               shift and go to state 47
+
+
+state 44
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO : WORD - WORD . )
+
+    )               shift and go to state 48
+
+
+state 45
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO : WORD - WORD . )
+
+    )               shift and go to state 49
+
+
+state 46
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , . INT
+
+    INT             shift and go to state 50
+
+
+state 47
+
+    (2) RUAS -> INT : WORD ( PAR LIXO : WORD - WORD ) .
+
+    ,               reduce using rule 2 (RUAS -> INT : WORD ( PAR LIXO : WORD - WORD ) .)
+
+
+state 48
+
+    (3) RUAS -> INT : WORD ( IMPAR LIXO : WORD - WORD ) .
+
+    ,               reduce using rule 3 (RUAS -> INT : WORD ( IMPAR LIXO : WORD - WORD ) .)
+
+
+state 49
+
+    (4) RUAS -> INT : WORD ( AMBOS LIXO : WORD - WORD ) .
+
+    ,               reduce using rule 4 (RUAS -> INT : WORD ( AMBOS LIXO : WORD - WORD ) .)
+
+
+state 50
+
+    (1) Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT .
+
+    $end            reduce using rule 1 (Entry -> FLOAT , FLOAT , INT , WORD , RUAS , WORD , WORD , INT , INT , INT .)
+

@@ -1,0 +1,354 @@
+aresta( 'R Ferragial' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'R Ataide' ).
+aresta( 'R Ferragial' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'R Ataide' ).
+aresta( 'Pc Duque da Terceira' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'R Ferragial' ).
+aresta( 'Lg Corpo Santo' , 'R Corpo Santo' ).
+aresta( 'R Corpo Santo' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Corpo Santo' ).
+aresta( 'R Corpo Santo' , 'Lg Corpo Santo' ).
+aresta( 'R Corpo Santo' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Bernardino da Costa' ).
+aresta( 'R Bernardino da Costa' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Corpo Santo' ).
+aresta( 'R Bernardino da Costa' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Bernardino da Costa' ).
+aresta( 'Lg Corpo Santo' , 'R Bernardino da Costa' ).
+aresta( 'R Bernardino da Costa' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Bernardino da Costa' ).
+aresta( 'R Bernardino da Costa' , 'Lg Corpo Santo' ).
+aresta( 'R Bernardino da Costa' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'R Bernardino da Costa' ).
+aresta( 'R da Boavista' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'R da Boavista' ).
+aresta( 'Bqr do Duro' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'R Mastros' ).
+aresta( 'R Mastros' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'Bqr do Duro' ).
+aresta( 'R Mastros' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'Tv do Cais do Tojo' ).
+aresta( 'Tv do Cais do Tojo' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'R Mastros' ).
+aresta( 'R da Boavista' , 'Tv Marques de Sampaio' ).
+aresta( 'Tv Marques de Sampaio' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Tv Marques de Sampaio' ).
+aresta( 'Tv Marques de Sampaio' , 'R da Boavista' ).
+aresta( 'R Sao Paulo' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Tv Marquês de Sampaio' ).
+aresta( 'Tv Marquês de Sampaio' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Sao Paulo' ).
+aresta( 'Tv Marquês de Sampaio' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Bqr dos Ferreiros' ).
+aresta( 'Bqr dos Ferreiros' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Tv Marquês de Sampaio' ).
+aresta( 'Bqr dos Ferreiros' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Bqr dos Ferreiros' ).
+aresta( 'R da Boavista' , 'Rua da Boavista' ).
+aresta( 'Rua da Boavista' , 'R da Boavista' ).
+aresta( 'Rua da Boavista' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Rua da Boavista' ).
+aresta( 'R Instituto Industrial' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Instituto Industrial' ).
+aresta( 'R Cais do Tojo' , 'Tv do Cais do Tojo' ).
+aresta( 'Tv do Cais do Tojo' , 'R Cais do Tojo' ).
+aresta( 'R Cais do Tojo' , 'Tv do Cais do Tojo' ).
+aresta( 'Tv do Cais do Tojo' , 'R Cais do Tojo' ).
+aresta( 'Av Dom Carlos I' , 'R Cais do Tojo' ).
+aresta( 'R Cais do Tojo' , 'Tv do Cais do Tojo' ).
+aresta( 'Tv do Cais do Tojo' , 'R Cais do Tojo' ).
+aresta( 'R Cais do Tojo' , 'Av Dom Carlos I' ).
+aresta( 'R Cais do Tojo' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'R Cais do Tojo' ).
+aresta( 'R Cais do Tojo' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'R Cais do Tojo' ).
+aresta( 'R Cais do Tojo' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'R Cais do Tojo' ).
+aresta( 'Bqr do Duro' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Bqr do Duro' ).
+aresta( 'Tv Santa Catarina' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'Tv Santa Catarina' ).
+aresta( 'R Ferreiros a Santa Catarina' , 'Tv Santa Catarina' ).
+aresta( 'Tv Santa Catarina' , 'R Ferreiros a Santa Catarina' ).
+aresta( 'Av 24 de Julho' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'Av 24 de Julho' ).
+aresta( 'R Dom Luis I' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R Dom Luis I' ).
+aresta( 'R Santa Catarina' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R Santa Catarina' ).
+aresta( 'R Sao Paulo' , 'R Moeda' ).
+aresta( 'R Moeda' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Moeda' ).
+aresta( 'R Moeda' , 'R Sao Paulo' ).
+aresta( 'R Ribeira Nova' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'R Ribeira Nova' ).
+aresta( 'Tv Carvalho' , 'Pc Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Av Dom Carlos I' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Bqr do Duro' ).
+aresta( 'Bqr do Duro' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Av Dom Carlos I' ).
+aresta( 'Bqr do Duro' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Bqr do Duro' ).
+aresta( 'R Dom Luis I' , 'Bqr dos Ferreiros' ).
+aresta( 'Bqr dos Ferreiros' , 'R Dom Luis I' ).
+aresta( 'Bqr dos Ferreiros' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Bqr dos Ferreiros' ).
+aresta( 'R Dom Luis I' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'Av 24 de Julho' ).
+aresta( 'Av 24 de Julho' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Dom Luis I' ).
+aresta( 'Tv Condessa do Rio' , 'Fte 3' ).
+aresta( 'Tv Condessa do Rio' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'Tv Condessa do Rio' ).
+aresta( 'R Ribeira Nova' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Ribeira Nova' ).
+aresta( 'R Remolares' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'R Instituto Dona Amelia' ).
+aresta( 'R Instituto Dona Amelia' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'R Remolares' ).
+aresta( 'R Instituto Dona Amelia' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'Pc Dom Luis I' ).
+aresta( 'Pc Dom Luis I' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'R Instituto Dona Amelia' ).
+aresta( 'R Corpo Santo' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'R Flores' ).
+aresta( 'R Flores' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Pc Sao Paulo' ).
+aresta( 'Tv dos Remolares' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Pc Sao Paulo' ).
+aresta( 'Tv Corpo Santo' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Tv dos Remolares' ).
+aresta( 'Pc Sao Paulo' , 'R Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'R Sao Paulo' ).
+aresta( 'Tv Carvalho' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Bc da Moeda' ).
+aresta( 'Bc da Moeda' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Bc da Moeda' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Cc da Bica Grande' ).
+aresta( 'Cc da Bica Grande' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Bc da Moeda' ).
+aresta( 'Cc da Bica Grande' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'R Moeda' ).
+aresta( 'R Moeda' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Cc da Bica Grande' ).
+aresta( 'R Sao Paulo' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Tv dos Remolares' ).
+aresta( 'Tv dos Remolares' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Pc Sao Paulo' ).
+aresta( 'Tv dos Remolares' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Tv dos Remolares' ).
+aresta( 'R do Alecrim' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'R do Alecrim' ).
+aresta( 'Pc Duque da Terceira' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Tv dos Remolares' ).
+aresta( 'Tv dos Remolares' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Pc Duque da Terceira' ).
+aresta( 'Tv dos Remolares' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Tv Ribeira Nova' ).
+aresta( 'Tv Ribeira Nova' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Tv dos Remolares' ).
+aresta( 'Av 24 de Julho' , 'Tv dos Remolares' ).
+aresta( 'Tv dos Remolares' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Tv dos Remolares' ).
+aresta( 'Tv dos Remolares' , 'Av 24 de Julho' ).
+aresta( 'Tv dos Remolares' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Tv dos Remolares' ).
+aresta( 'Tv dos Remolares' , 'R Sao Paulo' ).
+aresta( 'Av 24 de Julho' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'R Cintura' ).
+aresta( 'R Cintura' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Av 24 de Julho' ).
+aresta( 'R Cintura' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'R Cintura' ).
+aresta( 'Pc Duque da Terceira' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Tv Corpo Santo' ).
+aresta( 'Tv Corpo Santo' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Pc Duque da Terceira' ).
+aresta( 'Tv Corpo Santo' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'Cais do Sodre' ).
+aresta( 'Cais do Sodre' , 'Tv Corpo Santo' ).
+aresta( 'Bc da Moeda' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Bc da Moeda' ).
+aresta( 'R da Boavista' , 'Pto Galega' ).
+aresta( 'Pto Galega' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Pto Galega' ).
+aresta( 'Pto Galega' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Bc da Boavista' ).
+aresta( 'Bc da Boavista' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Bc da Boavista' ).
+aresta( 'Bc da Boavista' , 'R da Boavista' ).
+aresta( 'R Remolares' , 'Tv Ribeira Nova' ).
+aresta( 'Tv Ribeira Nova' , 'R Nova do Carvalho' ).
+aresta( 'R Nova do Carvalho' , 'Tv Ribeira Nova' ).
+aresta( 'Tv Ribeira Nova' , 'R Remolares' ).
+aresta( 'Av 24 de Julho' , 'Pc Ribeira Nova' ).
+aresta( 'Pc Ribeira Nova' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'Pc Ribeira Nova' ).
+aresta( 'Pc Ribeira Nova' , 'Av 24 de Julho' ).
+aresta( 'Pc Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'Pc Sao Paulo' ).
+aresta( 'Tv Carvalho' , 'Pc Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'Tv Ribeira Nova' ).
+aresta( 'Tv Ribeira Nova' , 'Pc Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'Tv Carvalho' ).
+aresta( 'Tv Ribeira Nova' , 'Pc Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Pc Sao Paulo' ).
+aresta( 'Pc Sao Paulo' , 'Tv Ribeira Nova' ).
+aresta( 'Pc Duque da Terceira' , 'R Bernardino da Costa' ).
+aresta( 'R Bernardino da Costa' , 'Pc Duque da Terceira' ).
+aresta( 'R Bernardino da Costa' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'R Bernardino da Costa' ).
+aresta( 'R do Alecrim' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'R Remolares' ).
+aresta( 'R Remolares' , 'Pc Duque da Terceira' ).
+aresta( 'Pc Duque da Terceira' , 'R do Alecrim' ).
+aresta( 'Pc Duque da Terceira' , 'Av 24 de Julho' ).
+aresta( 'Av 24 de Julho' , 'Pc Duque da Terceira' ).
+aresta( 'Cais do Sodre' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'R Arsenal' ).
+aresta( 'R Arsenal' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'Cais do Sodre' ).
+aresta( 'R Arsenal' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'Cc do Ferragial' ).
+aresta( 'Cc do Ferragial' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'R Arsenal' ).
+aresta( 'Cc do Ferragial' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'R Corpo Santo' ).
+aresta( 'R Corpo Santo' , 'Lg Corpo Santo' ).
+aresta( 'Lg Corpo Santo' , 'Cc do Ferragial' ).
+aresta( 'R da Boavista' , 'Bc Francisco Andre' ).
+aresta( 'Bc Francisco Andre' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'Bc Francisco Andre' ).
+aresta( 'Bc Francisco Andre' , 'R da Boavista' ).
+aresta( 'Pc Sao Paulo' , 'Tv de Sao Paulo' ).
+aresta( 'Tv de Sao Paulo' , 'R Ribeira Nova' ).
+aresta( 'R Ribeira Nova' , 'Tv de Sao Paulo' ).
+aresta( 'Tv de Sao Paulo' , 'Pc Sao Paulo' ).
+aresta( 'Tv dos Remolares' , 'Av 24 de Julho' ).
+aresta( 'Av 24 de Julho' , 'Pc Duque da Terceira' ).
+aresta( 'Av 24 de Julho' , 'Pc Ribeira Nova' ).
+aresta( 'R O Seculo' , 'Av 24 de Julho' ).
+aresta( 'Av 24 de Julho' , 'R O Seculo' ).
+aresta( 'R Marcos Portugal' , 'Muro do Lg Agostinho da Silva' ).
+aresta( 'R Marcos Portugal' , 'R O Seculo' ).
+aresta( 'R O Seculo' , 'R Marcos Portugal' ).
+aresta( 'Tv Andre Valente' , 'jt silo' ).
+aresta( 'Tv Andre Valente' , 'R Marcos Portugal' ).
+aresta( 'R Marcos Portugal' , 'Tv Andre Valente' ).
+aresta( 'R Remolares' , 'Crzt Tv Remolares' ).
+aresta( 'R Remolares' , 'Tv Andre Valente' ).
+aresta( 'Tv Andre Valente' , 'R Remolares' ).
+aresta( 'R Emenda' , 'R Remolares' ).
+aresta( 'R Remolares' , 'R Emenda' ).
+aresta( 'R Salgadeiras' , 'SFC CZT  R. da Atalaia' ).
+aresta( 'R Salgadeiras' , 'R Emenda' ).
+aresta( 'R Emenda' , 'R Salgadeiras' ).
+aresta( 'Tv Guilherme Cossoul' , 'R Salgadeiras' ).
+aresta( 'R Salgadeiras' , 'Tv Guilherme Cossoul' ).
+aresta( 'Lg Conde Barao' , 'Tv Guilherme Cossoul' ).
+aresta( 'Tv Guilherme Cossoul' , 'Lg Conde Barao' ).
+aresta( 'R Sao Bento' , 'Lg Conde Barao' ).
+aresta( 'Lg Conde Barao' , 'R Sao Bento' ).
+aresta( 'R Imprensa Nacional' , 'R Sao Bento' ).
+aresta( 'R Sao Bento' , 'R Imprensa Nacional' ).
+aresta( 'R Vitor Cordon' , 'R Imprensa Nacional' ).
+aresta( 'R Imprensa Nacional' , 'R Vitor Cordon' ).
+aresta( 'R Sao Paulo' , 'R Vitor Cordon' ).
+aresta( 'R Vitor Cordon' , 'R Sao Paulo' ).
+aresta( 'R Sao Bento' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'R Sao Bento' ).
+aresta( 'R Teixeira' , 'R Sao Bento' ).
+aresta( 'R Sao Bento' , 'R Teixeira' ).
+aresta( 'R Salgadeiras' , 'SFC Jt 11' ).
+aresta( 'R Salgadeiras' , 'R Teixeira' ).
+aresta( 'R Teixeira' , 'R Salgadeiras' ).
+aresta( 'R Posso dos Negros' , 'crzt R Sao Bento' ).
+aresta( 'R Posso dos Negros' , 'R Salgadeiras' ).
+aresta( 'R Salgadeiras' , 'R Posso dos Negros' ).
+aresta( 'R Correia Garasao' , 'R Posso dos Negros' ).
+aresta( 'R Posso dos Negros' , 'R Correia Garasao' ).
+aresta( 'R Sao Paulo' , 'R Correia Garasao' ).
+aresta( 'R Correia Garasao' , 'R Sao Paulo' ).
+aresta( 'Tv Guilherme Cossoul' , 'R Sao Paulo' ).
+aresta( 'R Sao Paulo' , 'Tv Guilherme Cossoul' ).
+aresta( 'R Sao Bento' , 'Tv Guilherme Cossoul' ).
+aresta( 'Tv Guilherme Cossoul' , 'R Sao Bento' ).
+aresta( 'R Cruz dos Poiais de Sao Bento' , 'Crt R das Parreiras' ).
+aresta( 'R Cruz dos Poiais de Sao Bento' , 'R Sao Bento' ).
+aresta( 'R Sao Bento' , 'R Cruz dos Poiais de Sao Bento' ).
+aresta( 'R da Cintura do Porto de Lisboa' , 'R Cruz dos Poiais de Sao Bento' ).
+aresta( 'R Cruz dos Poiais de Sao Bento' , 'R da Cintura do Porto de Lisboa' ).
+aresta( 'R Instituto Industrial' , 'R da Cintura do Porto de Lisboa' ).
+aresta( 'R da Cintura do Porto de Lisboa' , 'R Instituto Industrial' ).
+aresta( 'Tv Carvalho' , 'frt nA� 29' ).
+aresta( 'Tv Carvalho' , 'R Instituto Industrial' ).
+aresta( 'R Instituto Industrial' , 'Tv Carvalho' ).
+aresta( 'R da Boavista' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'R da Boavista' ).
+aresta( 'R Dom Luis I' , 'R da Boavista' ).
+aresta( 'R da Boavista' , 'R Dom Luis I' ).
+aresta( 'R Emenda' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'R Emenda' ).
+aresta( 'R Diario de Noticias' , 'R Emenda' ).
+aresta( 'R Emenda' , 'R Diario de Noticias' ).
+aresta( 'R do Alecrim' , 'R Diario de Noticias' ).
+aresta( 'R Diario de Noticias' , 'R do Alecrim' ).
+aresta( 'R O Seculo' , 'R do Alecrim' ).
+aresta( 'R do Alecrim' , 'R O Seculo' ).
+aresta( 'R Marechal Saldanha' , 'R O Seculo' ).
+aresta( 'R O Seculo' , 'R Marechal Saldanha' ).
+aresta( 'R Loreto' , 'R Marechal Saldanha' ).
+aresta( 'R Marechal Saldanha' , 'R Loreto' ).
+aresta( 'R Ferragial' , 'R Loreto' ).
+aresta( 'R Loreto' , 'R Ferragial' ).
+aresta( 'R Dom Luis I' , 'R Ferragial' ).
+aresta( 'R Ferragial' , 'R Dom Luis I' ).
+aresta( 'Tv Carvalho' , 'R Dom Luis I' ).
+aresta( 'R Dom Luis I' , 'Tv Carvalho' ).
+aresta( 'R Antonio Maria Cardoso' , 'Tv Carvalho' ).
+aresta( 'Tv Carvalho' , 'R Antonio Maria Cardoso' ).
+aresta( 'Tv Sequeiro' , 'Jt 8' ).
+aresta( 'Tv Sequeiro' , 'R Antonio Maria Cardoso' ).
+aresta( 'R Antonio Maria Cardoso' , 'Tv Sequeiro' ).
+aresta( 'R Diario de Noticias' , 'Tv Sequeiro' ).
+aresta( 'Tv Sequeiro' , 'R Diario de Noticias' ).
+aresta( 'R Quintinha' , 'R Diario de Noticias' ).
+aresta( 'R Diario de Noticias' , 'R Quintinha' ).
