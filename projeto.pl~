@@ -39,10 +39,8 @@ adjacentes(PontoA,PontoB,Distancia):-aresta(PontoA,PontoB,Distancia).
 
 getCusto(PontoA,PontoB,Custo):-adjacentes(PontoA,PontoB,Custo).
 
-
 getCustoCaminho([P1,P2],A):-getCusto(P1,P2,A).
 getCustoCaminho([P1,P2|C],A+Custo2):-getCusto(P1,P2,A),getCustoCaminho([P2|C],Custo2).
-getCustoCaminho(_,_).
 
 caminhoMaisRapido(Caminho1,Caminho2,R,Custo):-getCustoCaminho(Caminho1,Custo1),getCustoCaminho(Caminho2,Custo2),caminhoMaisRapido2(Caminho1,Caminho2,Custo1,Custo2,Custo,R).
 

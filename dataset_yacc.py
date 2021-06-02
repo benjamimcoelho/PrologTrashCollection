@@ -3,6 +3,7 @@ from dataset_lex import tokens
 from dataset_lex import literals
 import sys
 import re
+from geopy.distance import distance
 
 last_street = ''
 info = []
@@ -21,15 +22,33 @@ def strip_one_space(s):
     return s
 
 
-def exportArestas(arestas):
-    with open("arestas.txt", 'w') as f:
-        for i in range(len(arestas)):
-            f.write('aresta( \'' + strip_one_space(arestas[i][0]) +
-                    '\' ,' + ' \'' + strip_one_space(arestas[i][1]) + '\' ).\n')
+def getAdjacencias(rua, arestas):
+    res = []
+    for aresta in arestas:
+        if aresta[0] == rua:
+            res.append(aresta[1])
+    return res
+
+
+def exportArestas(arestas, pontos_recolha):
+    arestas_pontos = []
+    for i in pontos_recolha.items():
+        adjacencias = getAdjacencias(i[1][3], arestas)
+        for j in pontos_recolha.items():
+            if j[1][3] in adjacencias:
+                d = distance((i[1][0], i[1][1]), (j[1][0], j[1][1])).km
+                arestas_pontos.append((i[0], j[0], d))
+
+    with open("arestas.pl", 'w') as f:
+        f.write(':- module(arestas, [aresta/3]).\n')
+        for aresta in arestas_pontos:
+            f.write('aresta( ' + str(aresta[0]) + ' , ' +
+                    str(aresta[1]) + ' , ' + str(aresta[2]) + ' ).\n')
 
 
 def exportPontosRecolha(pontos_recolha):
-    with open("pontosRecolha.txt", 'w') as f:
+    with open("pontosRecolha.pl", 'w') as f:
+        f.write(':- module(pontosRecolha, [pontoRecolha/6]).\n')
         for i in pontos_recolha.items():
             f.write('pontoRecolha( ' + i[0] + ' , ' + i[1][0] + ' , ' + i[1][1] +
                     ' , \'' + i[1][2] + '\' , \'' + strip_one_space(i[1][3]) + '\' , ' + str(i[1][4]) + ').\n')
@@ -187,5 +206,5 @@ print('TOTAL ENTRIES VÁLIDAS: ' + str(total))
 # print(str(len(parser.arestas)))
 # print(parser.pontos_recolha)
 # print(str(len(parser.pontos_recolha)))
-exportArestas(parser.arestas)
+exportArestas(parser.arestas, parser.pontos_recolha)
 exportPontosRecolha(parser.pontos_recolha)

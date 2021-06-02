@@ -1,3 +1,4 @@
+:- module(pontosRecolha, [pontoRecolha/6]).
 pontoRecolha( 15805 , -9.143308809 , 38.70807879 , 'Misericordia' , 'R do Alecrim' , [('Lixos', 'CV0090', '90'), ('Lixos', 'CV0240', '1680'), ('Papel e Cartao', 'CV0240', '1440'), ('Papel e Cartao', 'CV0090', '90')]).
 pontoRecolha( 15806 , -9.143377778 , 38.70807819 , 'Misericordia' , 'R do Alecrim' , [('Lixos', 'CV0240', '240'), ('Lixos', 'CV0140', '840'), ('Lixos', 'CV0120', '120'), ('Lixos', 'CV0090', '180'), ('Papel e Cartao', 'CV0140', '280'), ('Papel e Cartao', 'CV0090', '90'), ('Papel e Cartao', 'CA0090', '90')]).
 pontoRecolha( 15807 , -9.143481807 , 38.70730262 , 'Misericordia' , 'R do Alecrim' , [('Lixos', 'CV0240', '240'), ('Lixos', 'CV0140', '420'), ('Papel e Cartao', 'CV0240', '240'), ('Papel e Cartao', 'CV0140', '140')]).
