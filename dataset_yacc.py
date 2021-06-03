@@ -11,7 +11,7 @@ pontoId = 0
 
 
 def deleteNewLine(string):
-    return re.sub(r'\n', '', string)
+    return int(re.sub(r'\n', '', string))
 
 
 def strip_one_space(s):
@@ -37,7 +37,8 @@ def exportArestas(arestas, pontos_recolha):
         for j in pontos_recolha.items():
             if j[1][3] in adjacencias:
                 d = distance((i[1][0], i[1][1]), (j[1][0], j[1][1])).km
-                arestas_pontos.append((i[0], j[0], d))
+                if (i[0], j[0], d) not in arestas_pontos:
+                    arestas_pontos.append((i[0], j[0], d))
 
     with open("arestas.pl", 'w') as f:
         f.write(':- module(arestas, [aresta/3]).\n')
@@ -124,6 +125,7 @@ def p_RUAS_Ambos(p):
     addIfNew(parser.arestas, (p[3], p[10]))
     addIfNew(parser.arestas, (p[10], p[3]))
     addIfNew(parser.arestas, (p[3], p[8]))
+
     last_street = p[3]
     info = [0, 0, 0, p[3], []]
     pontoId = p[1]
@@ -169,6 +171,7 @@ def p_RUAS_rua_INT_WORD(p):
     p[0] = 'rua'
     addIfNew(parser.arestas, (p[3], last_street))
     addIfNew(parser.arestas, (last_street, p[3]))
+    addIfNew(parser.arestas, (p[3], p[5]))
     last_street = p[3]
     info = [0, 0, 0, p[3], []]
     pontoId = p[1]
