@@ -1,6 +1,8 @@
 :-use_module(arestas).
 :-use_module(pontosRecolha).
 
+:- set_prolog_flag(stack_limit, 4_000_000_000).
+
 %problema de estado unico, ambiente deterministico e totalmente
 % observável (o estado inicial e final é a garagem)
 
@@ -33,6 +35,7 @@ garagem(15805).
 %definicao do ponto onde está o local de deposicao
 deposito(15886).
 
+numero_pontos_a_visitar(1).
 
 adjacentes(PontoA,PontoB):-aresta(PontoA,PontoB,_).
 
@@ -108,16 +111,27 @@ dfs(Act,Dest,LA,Cam,Custo):-aresta(Act,X,C1),
                      \+ member(X,LA),
                      dfs(X,Dest,[X|LA],Cam,C2),Custo is C1+C2.
 
+bfsS(Orig,Dest,Cam):-bfsS2(Dest,[[Orig]],Cam).
 
-bfs(Orig,Dest,Cam):-bfs2(Dest,[[Orig]],Cam).
+bfsS2(Dest,[[Dest|T]|_],Cam):-reverse([Dest|T],Cam).
 
-bfs2(Dest,[[Dest|T]|_],Cam):-reverse([Dest|T],Cam).
-
-bfs2(Dest,[LA|Outros],Cam):-LA=[Act|_],
+bfsS2(Dest,[LA|Outros],Cam):-LA=[Act|_],
                         findall([X|LA],(Dest\==Act,aresta(Act,X,_),
                         \+member(X,LA)),Novos),
                         append(Outros,Novos,Todos),
-                        bfs2(Dest,Todos,Cam).
+                        bfsS2(Dest,Todos,Cam).
+
+
+
+bfs(Orig,Dest,Cam,Custo):-bfs2(Dest,[[Orig]],Cam,Custo).
+
+bfs2(Dest,[[Dest|T]|_],Cam,Custo):-reverse([Dest|T],Cam),getCustoCaminho(Cam,Custo).
+
+bfs2(Dest,[LA|Outros],Cam,Custo):-LA=[Act|_],
+                        findall([X|LA],(Dest\==Act,aresta(Act,X,_),
+                        \+member(X,LA)),Novos),
+                        append(Outros,Novos,Todos),
+                        bfs2(Dest,Todos,Cam,Custo).
 
 
 bestfs(Orig,Dest,Cam,Custo):-bestfs2(Dest,(0,[Orig]),Cam,Custo).
@@ -157,38 +171,471 @@ aStar2(Dest,[(_,Ca,LA)|Outros],Cam,Custo):-LA=[Act|_],findall((CEX,CaX,[X|LA]),
         sort(Todos,TodosOrd),
         aStar2(Dest,TodosOrd,Cam,Custo).
 
+
 estimativa(Nodo1,Nodo2,Estimativa):-
 pontoRecolha(Nodo1,X1,Y1,_,_,_),
 pontoRecolha(Nodo2,X2,Y2,_,_,_),
 Estimativa is sqrt((X1-X2)^2+(Y1-Y2)^2).
 
 
+gulosa(Partida, Destino,Caminho,Custo) :-
+    %statistics(runtime,[Start|_]),
+    estimativa(Partida,Destino ,Estimativa),
+    gulosa2([[Partida]/0/Estimativa],Destino,InvCaminho/Custo/_),
+    reverse(InvCaminho, Caminho).
+    %,
+    %statistics(runtime,[Stop|_]),
+    %Runtime is Stop-Start,
+    %write("Tempo: "),write(Runtime).
 
+gulosa2(Caminhos, Destino ,Caminho) :-
+    melhorCaminhoGul(Caminhos, Caminho),
+    Caminho = [Nodo|_]/_/_,
+    Nodo == Destino.
+
+gulosa2(Caminhos, Destino ,SolucaoCaminho) :-
+    melhorCaminhoGul(Caminhos,MelhorCaminho),
+    seleciona(MelhorCaminho, Caminhos, OutrosCaminhos),
+    findall(NovoCaminho, adjacenteGul(MelhorCaminho,NovoCaminho,Destino), ExpCaminhos),
+    append(OutrosCaminhos, ExpCaminhos, NovoCaminhos),
+    gulosa2(NovoCaminhos,Destino ,SolucaoCaminho).
+
+melhorCaminhoGul([Caminho], Caminho) :- !.
+
+melhorCaminhoGul([Caminho1/Custo1/Est1,_/_/Est2|Caminhos], MelhorCaminho) :-
+    Est1 =< Est2, !,
+    melhorCaminhoGul([Caminho1/Custo1/Est1|Caminhos], MelhorCaminho).
+
+melhorCaminhoGul([_|Caminhos], MelhorCaminho) :-
+    melhorCaminhoGul(Caminhos, MelhorCaminho).
+
+adjacenteGul([Nodo|Caminho]/Custo/_, [ProxNodo,Nodo|Caminho]/NovoCusto/Est,Destino) :-
+    adjacentes(Nodo, ProxNodo, PassoCusto),\+ member(ProxNodo, Caminho),
+    NovoCusto is Custo + PassoCusto,
+    estimativa(ProxNodo,Destino ,Est).
+
+seleciona(E, [E|Xs], Xs).
+seleciona(E, [X|Xs], [X|Ys]) :- seleciona(E, Xs, Ys).
 
 
 
 %Gerar os circuitos de recolha tanto indiferenciada como seletiva, caso existam, que
 %cubram um determinado território;
 
-gerarCircuitoDF([H,P],Solucao):-solveDF(H,P,Solucao).
-gerarCircuitoDF([H,P|T],Solucao):-solveDF(H,P,Solucao1),gerarCircuitoDF([P|T],Solucao2),append(Solucao2,Solucao1,Solucao).
+gerarCircuitoDF2([H,P],Solucao,Custo):-dfs(H,P,S1,C1),
+                                      deposito(D),
+                                      dfs(P,D,S2,C2),
+                                      garagem(G),
+                                      dfs(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
 
-gerarTodosCircuitosDF(Lista,Solucoes):-findall(X,gerarCircuitoDF(Lista,X),Solucoes).
 
-gerarCircuitoBF([H,P],Solucao):-solveBF(H,P,Solucao).
-gerarCircuitoBF([H,P|T],Solucao):-solveBF(H,P,Solucao1),gerarCircuitoBF([P|T],Solucao2),append(Solucao2,Solucao1,Solucao).
+gerarCircuitoDF2([H,P|T],Solucao,Custo):-
+                        dfs(H,P,S1,C1),
+                        gerarCircuitoDF2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoDF([H,P|T],Solucao,Custo):-garagem(G),dfs(G,H,S1,C1),
+                                        gerarCircuitoDF2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+
+gerarCircuitoBF2([H,P],Solucao,Custo):-bfs(H,P,S1,C1),
+                                      deposito(D),
+                                      bfs(P,D,S2,C2),
+                                      garagem(G),
+                                      bfs(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
+
+
+
+gerarCircuitoBF2([H,P|T],Solucao,Custo):-
+                        bfs(H,P,S1,C1),
+                        gerarCircuitoBF2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoBF([H,P|T],Solucao,Custo):-garagem(G),bfs(G,H,S1,C1),
+                                        gerarCircuitoBestFS2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+gerarCircuitoBestFS2([H,P],Solucao,Custo):-bestfs(H,P,S1,C1),
+                                      deposito(D),
+                                      bestfs(P,D,S2,C2),
+                                      garagem(G),
+                                      bestfs(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
+
+
+
+gerarCircuitoBestFS2([H,P|T],Solucao,Custo):-
+                        bestfs(H,P,S1,C1),
+                        gerarCircuitoBestFS2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoBestFS([H,P|T],Solucao,Custo):-garagem(G),bfs(G,H,S1,C1),
+                                        gerarCircuitoBestFS2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+
+
+gerarCircuitoBNB2([H,P],Solucao,Custo):-bnb(H,P,S1,C1),
+                                      deposito(D),
+                                      bnb(P,D,S2,C2),
+                                      garagem(G),
+                                      bnb(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
+
+
+
+gerarCircuitoBNB2([H,P|T],Solucao,Custo):-
+                        bnb(H,P,S1,C1),
+                        gerarCircuitoBNB2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoBNB([H,P|T],Solucao,Custo):-garagem(G),bnb(G,H,S1,C1),
+                                        gerarCircuitoBNB2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+
+
+gerarCircuitoASTAR2([H,P],Solucao,Custo):-aStar(H,P,S1,C1),
+                                      deposito(D),
+                                      aStar(P,D,S2,C2),
+                                      garagem(G),
+                                      aStar(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
+
+
+
+gerarCircuitoASTAR2([H,P|T],Solucao,Custo):-
+                        aStar(H,P,S1,C1),
+                        gerarCircuitoASTAR2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoASTAR([H,P|T],Solucao,Custo):-garagem(G),aStar(G,H,S1,C1),
+                                        gerarCircuitoASTAR2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+
+gerarCircuitoGulosa2([H,P],Solucao,Custo):-gulosa(H,P,S1,C1),
+                                      deposito(D),
+                                      gulosa(P,D,S2,C2),
+                                      garagem(G),
+                                      gulosa(D,G,S3,C3),
+                                      append(S1,S2,S4),
+                                      append(S4,S3,Solucao),
+                                      Custo is C1+C2+C3.
+
+
+
+gerarCircuitoGulosa2([H,P|T],Solucao,Custo):-
+                        gulosa(H,P,S1,C1),
+                        gerarCircuitoGulosa2([P|T],S2,C2),
+                        append(S1,S2,Solucao),
+                        Custo is C1+C2.
+
+
+
+gerarCircuitoGulosa([H,P|T],Solucao,Custo):-garagem(G),gulosa(G,H,S1,C1),
+                                        gerarCircuitoGulosa2([H,P|T],S2,C2),
+                                        append(S1,S2,Solucao),
+                                        Custo is C1+C2.
+
+
+
+gerarTodosCircuitosDF(Lista,Solucoes):-findall((X,Y),gerarCircuitoDF(Lista,X,Y),Solucoes).
+
+gerarCircuitoBF([H,P],Solucao):-bfsS(H,P,Solucao).
+gerarCircuitoBF([H,P|T],Solucao):-bfsS(H,P,Solucao1),gerarCircuitoBF([P|T],Solucao2),append(Solucao2,Solucao1,Solucao).
 
 gerarTodosCircuitosBF(Lista,Solucoes):-findall(X,gerarCircuitoBF(Lista,X),Solucoes).
 
 
-gerarCircuitoMaisRapidoDF(Solucao,Custo,Capacidade):-garagem(G),pontoMaisProximo([],G,R,C),solveDF(G,R,S1,C1),getQuantidadeLixo(R,'Lixos',Capacidade),gerarCircuitoMaisRapidoDF2(S2,C2,R,[R],Capacidade),append(S1,S2,Solucao),Custo is C1+C2.
+gerarCircuitoMaisRapidoDF(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),dfs(G,R,S1,C1),
+           gerarCircuitoMaisRapidoDF2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
 
-gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,_,Capacidade):-Capacidade > 15000,deposito(D),solveDF(Atual,D,S1,C1),garagem(G),solveDF(D,G,S2,C2),append(S1,S2,Solucao),Custo is C1+C2.
-gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,Visitados,Capacidade):-pontoMaisProximo(Visitados,Atual,R,C),solveDF(Atual,R,S1,C1),getQuantidadeLixo(R,'Lixos',Cap1),Capacidade is Capacidade + Cap1,gerarCircuitoDF2(S2,C2,R,R|Visitados,Capacidade),append(S1,S2,Solucao),Custo is C1+C2.
+gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),dfs(Atual,D,S1,C1),
+                                       garagem(G),dfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  dfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoDF2(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosDF(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),dfs(G,R,S1,C1),
+           gerarCircuitoMaisPontosDF2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosDF2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),dfs(Atual,D,S1,C1),
+                                       garagem(G),dfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosDF2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  dfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosDF2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisRapidoBF(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),bfs(G,R,S1,C1),
+           gerarCircuitoMaisRapidoBF2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBF2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bfs(Atual,D,S1,C1),
+                                       garagem(G),bfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBF2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  bfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoBF2(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosBF(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),bfs(G,R,S1,C1),
+           gerarCircuitoMaisPontosBF2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBF2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bfs(Atual,D,S1,C1),
+                                       garagem(G),bfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBF2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  bfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosBF2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisRapidoBestFS(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),bestfs(G,R,S1,C1),
+           gerarCircuitoMaisRapidoBestFS2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBestFS2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bestfs(Atual,D,S1,C1),
+                                       garagem(G),bestfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBestFS2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  bestfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoBestFS2(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosBestFS(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),bestfs(G,R,S1,C1),
+           gerarCircuitoMaisPontosBestFS2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBestFS2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bestfs(Atual,D,S1,C1),
+                                       garagem(G),bestfs(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBestFS2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  bestfs(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosBestFS2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBNB(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),bnb(G,R,S1,C1),
+           gerarCircuitoMaisRapidoBNB2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBNB2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bnb(Atual,D,S1,C1),
+                                       garagem(G),bnb(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoBNB2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  bnb(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoBNB(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosBNB(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),bnb(G,R,S1,C1),
+           gerarCircuitoMaisPontosBNB2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBNB2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),bnb(Atual,D,S1,C1),
+                                       garagem(G),bnb(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosBNB2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  bnb(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosBNB2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisRapidoAStar(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),aStar(G,R,S1,C1),
+           gerarCircuitoMaisRapidoAStar2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoAStar2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),aStar(Atual,D,S1,C1),
+                                       garagem(G),aStar(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoAStar2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  aStar(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoAStar2(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosAStar(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),aStar(G,R,S1,C1),
+           gerarCircuitoMaisPontosAStar2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosAStar2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),aStar(Atual,D,S1,C1),
+                                       garagem(G),aStar(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosAStar2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  aStar(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosAStar2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoGulosa(Solucao,Custo):-garagem(G),
+           pontoMaisProximo([],G,R,_),gulosa(G,R,S1,C1),
+           gerarCircuitoMaisRapidoGulosa2(S2,C2,R,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoGulosa2(Solucao,Custo,Atual,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),gulosa(Atual,D,S1,C1),
+                                       garagem(G),gulosa(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoGulosa2(Solucao,Custo,Atual,Visitados):-
+                                  pontoMaisProximo(Visitados,Atual,R,C),
+                                  gulosa(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisRapidoGulosa2(S2,C2,R,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
+
+
+gerarCircuitoMaisPontosGulosa(Solucao,Custo,Tipo):-garagem(G),
+           pontoMenosLixo([],Tipo,R,_),gulosa(G,R,S1,C1),
+           gerarCircuitoMaisPontosGulosa2(S2,C2,R,Tipo,[R]),
+           append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosGulosa2(Solucao,Custo,Atual,_,Visitados):-
+                                       tamanho(Visitados,L2),
+                                       numero_pontos_a_visitar(M),
+                                       L2>M,
+                                       deposito(D),gulosa(Atual,D,S1,C1),
+                                       garagem(G),gulosa(D,G,S2,C2),
+                                       append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisPontosGulosa2(Solucao,Custo,Atual,Tipo,Visitados):-
+                                  pontoMenosLixo(Visitados,Tipo,R,_),
+                                  gulosa(Atual,R,S1,C1),
+                                  append([R],Visitados,V),
+                                  gerarCircuitoMaisPontosGulosa2(S2,C2,R,Tipo,V),
+                                  append(S1,S2,Solucao),Custo is C1+C2.
 
 
 
 %predicados auxiliares
+%
+tamanho([]     , 0 ).
+tamanho([_|Xs] , L ) :- tamanho(Xs,N) , L is N+1 .
 
 nao( Questao ) :-
     Questao, !, fail.
