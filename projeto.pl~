@@ -69,43 +69,101 @@ caminhoMaisLixo2(_,_,C2,L2,C2,L2).
 
 pontosIguais(A,A).
 
-% solve( Node, Solution):
-%    Solution is an acyclic path (in reverse order) between Node and a goal
 
-solveBF( Node, Objetivo ,Solution):-
-  breadthfirst( [[Node]],Objetivo,  Solution).
+menorPonto(P1,C1,_,C2,R,C):-C1<C2,R is P1, C is C1.
+menorPonto(_,_,P2,C2,R,C):-R is P2, C is C2.
 
-solveDF(Node,Objetivo, Solution):-
-  depthfirst( [], Node, Objetivo, Solution).
+pontoMaisProximo(Visitados,Atual,R,C):-findall((X,Y),aresta(Atual,X,Y),Z),pontoMaisProximo2(Visitados,Z,R,C,1).
 
-% depthfirst( Path, Node, Solution):
-%   extending the path [Node | Path] to a goal gives Solution
 
-depthfirst( Path, Node,Objetivo, [Node|Path] ):-pontosIguais(Node,Objetivo).
+pontoMaisProximo2(Visitados,[(X,Y)|T],R,C,1):-nao(membro(X,Visitados)),pontoMaisProximo2(Visitados,T,R2,C2,0),menorPonto(X,Y,R2,C2,R,C).
 
-depthfirst( Path, Node,Objetivo, Sol)  :-
-  adjacentes( Node, Node1),
-  nao(membro( Node1, Path)),                % Prevent a cycle
-  depthfirst( [Node | Path], Node1,Objetivo, Sol).
+pontoMaisProximo2(Visitados,[_|T],R,C,1):-pontoMaisProximo2(Visitados,T,R,C,1).
 
-% breadthfirst( [ Path1, Path2, ...], Solution):
-%   Solution is an extension to a goal of one of paths
+pontoMaisProximo2(Visitados,[(X,Y)|T],R,C,0):-nao(membro(X,Visitados)),pontoMaisProximo2(Visitados,T,R2,C2,0),menorPonto(X,Y,R2,C2,R,C).
 
-breadthfirst( [ [Node | Path] | _],Objetivo, [Node | Path])  :-
-  pontosIguais( Node,Objetivo).
+pontoMaisProximo2(Visitados,[_|T],R,C,0):-pontoMaisProximo2(Visitados,T,R,C,0).
 
-breadthfirst( [Path | Paths],Objetivo, Solution)  :-
-  extend( Path, NewPaths),
-  append( Paths, NewPaths, Paths1),
-  breadthfirst( Paths1,Objetivo, Solution).
+pontoMaisProximo2(_,[],9999,9999,_).
 
-extend( [Node | Path], NewPaths)  :-
-  bagof( [NewNode, Node | Path],
-         ( adjacentes( Node, NewNode), nao( membro( NewNode, [Node | Path] )) ),
-         NewPaths),
-  !.
 
-extend( Path, [] ).
+menorLixo(P1,L1,_,L2,R,L):-L1<L2,R is P1,L is L1.
+menorLixo(_,_,P2,L2,R,L):-R is P2, L is L2.
+
+pontoMenosLixo(Visitados,Tipo,R,L):-findall(X,pontoRecolha(X,_,_,_,_,_),Z),pontoMenosLixo2(Visitados,Tipo,Z,R,L).
+
+pontoMenosLixo2(Visitados,Tipo,[H|T],R,L):-not(membro(H,Visitados)),getQuantidadeLixo(H,Tipo,L1),pontoMenosLixo2(Visitados,Tipo,T,R2,L2),menorLixo(H,L1,R2,L2,R,L).
+
+pontoMenosLixo2(Visitados,Tipo,[_|T],R,L):-pontoMenosLixo2(Visitados,Tipo,T,R,L).
+
+pontoMenosLixo2(_,_,[],9999,9999999).
+
+
+
+dfs(Orig,Dest,Cam,Custo):-dfs(Orig,Dest,[Orig],Cam,Custo).
+
+dfs(Dest,Dest,LA,Cam,0):-reverse(LA,Cam).
+
+dfs(Act,Dest,LA,Cam,Custo):-aresta(Act,X,C1),
+                     \+ member(X,LA),
+                     dfs(X,Dest,[X|LA],Cam,C2),Custo is C1+C2.
+
+
+bfs(Orig,Dest,Cam):-bfs2(Dest,[[Orig]],Cam).
+
+bfs2(Dest,[[Dest|T]|_],Cam):-reverse([Dest|T],Cam).
+
+bfs2(Dest,[LA|Outros],Cam):-LA=[Act|_],
+                        findall([X|LA],(Dest\==Act,aresta(Act,X,_),
+                        \+member(X,LA)),Novos),
+                        append(Outros,Novos,Todos),
+                        bfs2(Dest,Todos,Cam).
+
+
+bestfs(Orig,Dest,Cam,Custo):-bestfs2(Dest,(0,[Orig]),Cam,Custo).
+
+bestfs2(Dest,(Custo,[Dest|T]),Cam,Custo):-!,reverse([Dest|T],Cam).
+
+bestfs2(Dest,(Ca,LA),Cam,Custo):-LA=[Act|_],findall((EstX,CaX,[X|LA]),
+                 (aresta(Act,X,CX),\+member(X,LA),estimativa(X,Dest,EstX),
+                  CaX is Ca+CX),Novos),
+                  sort(Novos,NovosOrd),
+                  NovosOrd = [(_,CM,Melhor)|_],
+                  bestfs2(Dest,(CM,Melhor),Cam,Custo).
+
+
+bnb(Orig,Dest,Cam,Custo):-bnb2(Dest,[(0,[Orig])],Cam,Custo).
+
+bnb2(Dest,[(Custo,[Dest|T])|_],Cam,Custo):-reverse([Dest|T],Cam).
+
+bnb2(Dest,[(Ca,LA)|Outros],Cam,Custo):-LA=[Act|_],
+                      findall((CaX,[X|LA]),
+                      (Dest\==Act,aresta(Act,X,CustoX),\+ member(X,LA),
+                       CaX is CustoX + Ca),Novos),
+                      append(Outros,Novos,Todos),
+                      sort(Todos,TodosOrd),
+                      bnb2(Dest,TodosOrd,Cam,Custo).
+
+
+aStar(Orig,Dest,Cam,Custo):-aStar2(Dest,[(_,0,[Orig])],Cam,Custo).
+
+aStar2(Dest,[(_,Custo,[Dest|T])|_],Cam,Custo):-reverse([Dest|T],Cam).
+
+aStar2(Dest,[(_,Ca,LA)|Outros],Cam,Custo):-LA=[Act|_],findall((CEX,CaX,[X|LA]),
+       (Dest\==Act,aresta(Act,X,CustoX),\+ member(X,LA),
+        CaX is CustoX + Ca, estimativa(X,Dest,EstX),
+        CEX is CaX +EstX),Novos),
+        append(Outros,Novos,Todos),
+        sort(Todos,TodosOrd),
+        aStar2(Dest,TodosOrd,Cam,Custo).
+
+estimativa(Nodo1,Nodo2,Estimativa):-
+pontoRecolha(Nodo1,X1,Y1,_,_,_),
+pontoRecolha(Nodo2,X2,Y2,_,_,_),
+Estimativa is sqrt((X1-X2)^2+(Y1-Y2)^2).
+
+
+
 
 
 
@@ -116,6 +174,19 @@ gerarCircuitoDF([H,P],Solucao):-solveDF(H,P,Solucao).
 gerarCircuitoDF([H,P|T],Solucao):-solveDF(H,P,Solucao1),gerarCircuitoDF([P|T],Solucao2),append(Solucao2,Solucao1,Solucao).
 
 gerarTodosCircuitosDF(Lista,Solucoes):-findall(X,gerarCircuitoDF(Lista,X),Solucoes).
+
+gerarCircuitoBF([H,P],Solucao):-solveBF(H,P,Solucao).
+gerarCircuitoBF([H,P|T],Solucao):-solveBF(H,P,Solucao1),gerarCircuitoBF([P|T],Solucao2),append(Solucao2,Solucao1,Solucao).
+
+gerarTodosCircuitosBF(Lista,Solucoes):-findall(X,gerarCircuitoBF(Lista,X),Solucoes).
+
+
+gerarCircuitoMaisRapidoDF(Solucao,Custo,Capacidade):-garagem(G),pontoMaisProximo([],G,R,C),solveDF(G,R,S1,C1),getQuantidadeLixo(R,'Lixos',Capacidade),gerarCircuitoMaisRapidoDF2(S2,C2,R,[R],Capacidade),append(S1,S2,Solucao),Custo is C1+C2.
+
+gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,_,Capacidade):-Capacidade > 15000,deposito(D),solveDF(Atual,D,S1,C1),garagem(G),solveDF(D,G,S2,C2),append(S1,S2,Solucao),Custo is C1+C2.
+gerarCircuitoMaisRapidoDF2(Solucao,Custo,Atual,Visitados,Capacidade):-pontoMaisProximo(Visitados,Atual,R,C),solveDF(Atual,R,S1,C1),getQuantidadeLixo(R,'Lixos',Cap1),Capacidade is Capacidade + Cap1,gerarCircuitoDF2(S2,C2,R,R|Visitados,Capacidade),append(S1,S2,Solucao),Custo is C1+C2.
+
+
 
 %predicados auxiliares
 

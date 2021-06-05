@@ -65,7 +65,7 @@ def contains(list, elem):
 
 
 def addIfNew(list, elem):
-    if not contains(list, elem) and elem[0] != elem[1]:
+    if not contains(list, elem) and elem[0] != elem[1] and elem[0] != '' and elem[1] != '':
         list.append(elem)
 
 
@@ -101,6 +101,8 @@ def p_RUAS_Par(p):
     p[0] = 'ruas par'
     addIfNew(parser.arestas, (p[8], p[3]))
     addIfNew(parser.arestas, (p[3], p[10]))
+    addIfNew(parser.arestas, (p[3], last_street))
+    addIfNew(parser.arestas, (last_street, p[3]))
     last_street = p[3]
     info = [0, 0, 0, p[3], [], 0]
     pontoId = p[1]
@@ -112,6 +114,8 @@ def p_RUAS_Impar(p):
     p[0] = 'ruas impar'
     addIfNew(parser.arestas, (p[10], p[3]))
     addIfNew(parser.arestas, (p[3], p[8]))
+    addIfNew(parser.arestas, (p[3], last_street))
+    addIfNew(parser.arestas, (last_street, p[3]))
     last_street = p[3]
     info = [0, 0, 0, p[3], []]
     pontoId = p[1]
@@ -125,6 +129,8 @@ def p_RUAS_Ambos(p):
     addIfNew(parser.arestas, (p[3], p[10]))
     addIfNew(parser.arestas, (p[10], p[3]))
     addIfNew(parser.arestas, (p[3], p[8]))
+    addIfNew(parser.arestas, (p[3], last_street))
+    addIfNew(parser.arestas, (last_street, p[3]))
 
     last_street = p[3]
     info = [0, 0, 0, p[3], []]
