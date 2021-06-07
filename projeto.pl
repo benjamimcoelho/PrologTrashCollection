@@ -3,31 +3,7 @@
 
 :- set_prolog_flag(stack_limit, 4_000_000_000).
 
-%problema de estado unico, ambiente deterministico e totalmente
-% observável (o estado inicial e final é a garagem)
 
-%estados: ponto em que o camião se encontra
-
-%estado inicial: garagem
-
-%estado final: garagem
-
-%operadores:
-% movimentar de um ponto para o outro de acordo com a lista de
-% adjacencias
-%
-%
-%Teste objetivo: estado atual é a garagem e o camião já descarregou
-
-%custo da solução: soma das distãncias dos caminhos percorridos ou
-%quantidade de lixo que entregou
-
-
-%---------------TO DO-------------------------
-%caminho com mais pontos de recolha (pontos com menos lixo)
-%caminho com mais curto
-%caminho mais eficiente (mistura de tempo e lixo tratado)
-%comparar caminhos em termos de tempo e lixo recolhido
 
 %definição do ponto em que a garagem se situa
 garagem(15805).
